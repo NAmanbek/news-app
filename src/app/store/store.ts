@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { newsApi } from '../features/news/NewsService.ts';
+import { newsApi } from '../../features/news/newsApi';
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
-    [newsApi.reducerPath]: newsApi.reducer,
+   [newsApi.reducerPath]: newsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(newsApi.middleware),
@@ -11,4 +11,3 @@ const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-export default store;
