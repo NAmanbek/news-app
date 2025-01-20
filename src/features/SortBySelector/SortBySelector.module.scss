@@ -1,0 +1,12 @@
+.selectWrapper {
+  display: inline-block;
+}
+
+select {
+  padding: 2px;
+  border: 1px solid rgba(128, 128, 128, 0.5);
+  border-radius: 2px;
+  cursor: pointer;
+  background-color: white;
+  font-size: 15px;
+}

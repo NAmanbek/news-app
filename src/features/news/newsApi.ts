@@ -7,8 +7,12 @@ export const newsApi = createApi({
   reducerPath: 'newsApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
-    getLatestNews: builder.query({
-      query: () => `top-headlines?country=us&apiKey=${API_KEY}`
+    getLatestNews: builder.query<any, { query: string; sortBy: string; from: string; to: string }>({
+      query: ({ query, sortBy, from, to }) => {
+        const encodedQuery = encodeURIComponent(query);
+
+        return `/everything?q=${encodedQuery}&from=${from}&to=${to}&sortBy=${sortBy}&apiKey=${API_KEY}&pageSize=50`;
+      },
     }),
   }),
 });
