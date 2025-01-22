@@ -17,12 +17,12 @@ const SortBySelector: React.FC<Props> = ({ selectedSortBy, onSortByChange }) => 
     <div className={styles.selectWrapper}>
       <label>Sort by: </label>
       <select value={selectedSortBy} onChange={(e) => onSortByChange(e.target.value)}>
-      {sortOptions.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </select>
+        {sortOptions.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };

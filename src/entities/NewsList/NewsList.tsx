@@ -1,16 +1,18 @@
-import React, { useState } from 'react'
-import { useGetLatestNewsQuery } from '../../features/news/newsApi.ts'
-import styles from './NewsList.module.scss'
+import React, { useState } from 'react';
+import { useGetLatestNewsQuery } from '../../features/news/newsApi.ts';
+import styles from './NewsList.module.scss';
 import ParameterSelector from '../../features/ParameterSelector/ParameterSelector.tsx';
 import SortBySelector from '../../features/SortBySelector/SortBySelector.tsx';
 import DatePeriodSelector from '../../features/DatePeriodSelector/DatePeriodSelector.tsx';
+import NewsActions from '../../components/NewsActions.tsx';
+import assets from '../../assets/assets.ts';
 
 export const NewsList: React.FC = () => {
-
   const [parameter, setParameter] = useState('technology');
   const [sortBy, setSortBy] = useState('relevancy');
   const [startDate, setStartDate] = useState('2025-01-01');
-  const [endDate, setEndDate] = useState('2025-01-19');
+  const [endDate, setEndDate] = useState('2025-01-25');
+  const [readMoreState, setReadMoreState] = useState<{ [key: string]: boolean }>({});
 
   const { data, error, isLoading } = useGetLatestNewsQuery({
     query: parameter,
@@ -23,7 +25,12 @@ export const NewsList: React.FC = () => {
   if (error) return <div>Error Loading news.</div>;
 
   const validArticles = data?.articles?.filter((article: any) => {
-    const fieldsToCheck = [article.title, article.description, article.url, article.content];
+    const fieldsToCheck = [
+      article.title,
+      article.description,
+      article.url,
+      article.content
+    ];
     const isRemoved = fieldsToCheck.some((field) => field === '[Removed]');
     return (
       !isRemoved &&
@@ -40,6 +47,13 @@ export const NewsList: React.FC = () => {
     return date.toLocaleDateString();
   };
 
+  const handleReadMore = (url: string) => {
+    setReadMoreState((prevState) => ({
+      ...prevState,
+      [url]: !prevState[url],
+    }));
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.filters}>
@@ -53,17 +67,36 @@ export const NewsList: React.FC = () => {
         />
       </div>
       <div className={styles.newsList}>
-        {validArticles?.map((article: any, index: number) => (
-          <div key={index} className={styles.newsItem}>
+        {validArticles?.map((article: any) => (
+          <div key={article.url} className={styles.newsItem}>
             <h3>{article.title}</h3>
             <p>{article.description}</p>
-            <p>
-              <strong>Published on: </strong>
-              {formatDate(article.publishedAt)}
-            </p>
-            <a href={article.url} target="_blank" rel="noopener noreferrer">
-              Read more
-            </a>
+            <div className={styles.newsFoot}>
+              <span className={styles.readMoreContainer}>
+                <a
+                  onClick={() => handleReadMore(article.url)} // Only handle state change
+                  href={article.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Read more
+                </a>
+                <img
+                  src={readMoreState[article.url] ? assets.read_icon : assets.unread_icon}
+                  className={styles.readIcon}
+                  alt="Read more icon"
+                />
+              </span>
+
+              <span>
+                <strong className={styles.pubOn}>Published on: </strong>
+                {formatDate(article.publishedAt)}
+              </span>
+
+              <div>
+                <NewsActions articleId={article.url} />
+              </div>
+            </div>
           </div>
         ))}
       </div>

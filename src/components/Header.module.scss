@@ -1,0 +1,135 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+  max-width: 800px;
+  height: 62px;
+  box-sizing: border-box;
+  width: 100%;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  border-radius: 4px 4px 0 0;
+  margin-top: 10px;
+  background-color: #f8f9fa;
+}
+
+.logo {
+  display: flex;
+  justify-content: start;
+  flex: 1;
+
+  .iconLogo {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.appName {
+  font-size: 38px;
+  margin-left: 15px;
+}
+
+.icons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 25px;
+
+  div {
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .inputHeader {
+      width: 300px;
+      height: 32px;
+      border: none;
+      border-radius: 16px 0 0 16px;
+      padding-left: 15px;
+      outline: none;
+      box-shadow: rgba(50, 50, 93, 0.1) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.1) 0px 18px 36px -18px inset;
+
+      &:focus {
+        border: 0.5px solid rgb(125, 125, 125);
+      }
+
+      &.showInput {
+        display: block;
+        opacity: 1;
+      }
+    }
+  }
+
+  .profileContainer {
+    display: flex;
+    position: relative;
+    
+    .profileDropDown {
+      position: absolute;
+      background-color: #f8f9fa;
+      box-sizing: border-box;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      padding: 5px 0;
+      border-radius: 4px;
+      z-index: 10;
+      top: 40px;
+      right: -15px;
+      visibility: hidden; /* Initially hidden */
+      opacity: 0; /* Fully transparent */
+      transition: visibility 0.2s, opacity 0.2s ease-in-out;
+      
+      ul {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        align-items: start;
+        list-style: none;
+
+        li {
+          white-space: nowrap;
+          width: 100%;
+          padding: 0 10px;
+          cursor: pointer;
+          transition: background-color 0.2s ease;
+
+          &:hover {
+            background-color: #d7d7d7;
+          }
+        }
+      }
+    }
+
+    &:hover .profileDropDown {
+      visibility: visible; /* Show dropdown on hover */
+      opacity: 1; /* Fully opaque */
+    }
+  }
+
+  .iconButton {
+    width: 24px;
+    height: 24px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+    .iconImage {
+      width: 100%;
+    }
+  }
+}
+
+@media(max-width: 768px) {
+  .header {
+    min-width: 424.533px;
+  }
+
+  .icons {
+    gap: 15px;
+  }
+  .inputHeader {
+    display: none;
+  }
+}

@@ -1,12 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Noticia+Text:ital,wght@0,400;0,700;1,400;1,700&family=Outfit:wght@100..900&family=Prata&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
+  font-family: Notica;
+  background-color: white;
   color: #212529;
   line-height: 1.6;
+  justify-content: center;
 }
+

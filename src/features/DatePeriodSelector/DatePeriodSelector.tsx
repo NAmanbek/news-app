@@ -16,18 +16,22 @@ const DatePeriodSelector: React.FC<Props> = ({
 }) => {
   return (
     <div className={styles.container}>
-      <label> Start Date: </label>
-      <input
+      <div>
+        <label> From: </label>
+        <input
           type="date"
           value={startDate}
           onChange={(e) => onStartDateChange(e.target.value)}
         />
-      <label> End Date: </label>
-      <input
+      </div>
+      <div>
+        <label> To: </label>
+        <input
           type="date"
           value={endDate}
           onChange={(e) => onEndDateChange(e.target.value)}
         />
+      </div>
     </div>
   );
 };
