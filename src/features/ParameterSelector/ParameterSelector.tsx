@@ -17,11 +17,13 @@ const ParameterSelector: React.FC<Props> = ({ selectedParameter, onParameterChan
     { value: 'entertainment', label: 'Entertainment' },
     { value: 'politics', label: 'Politics' },
     { value: 'economics', label: 'Economics' },
+    { value: 'q', label: 'All' },
+    { value: 'Elon Musk', label: 'Elon Musk' }
   ];
 
   return (
     <div className={styles.selectWrapper}>
-      <label>Select a topic: </label>
+      <label>Topic: </label>
       <select value={selectedParameter} onChange={(e) => onParameterChange(e.target.value)}>
       {
         parameters.map((param) => (

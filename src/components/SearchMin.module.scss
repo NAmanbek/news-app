@@ -1,0 +1,62 @@
+.searchHidCont {
+  display: none;
+  flex-direction: row;
+  gap: 10px;
+  padding: 10px 15px;
+  min-width: 424.533px;
+  width: 100%;
+  background-color: #f8f9fa;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+
+  .inputHeader {
+    min-width: 300px;
+    height: 32px;
+    border: none;
+    border-radius: 16px 0 0 16px;
+    padding-left: 15px;
+    outline: none;
+    box-shadow: rgba(50, 50, 93, 0.1) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.1) 0px 18px 36px -18px inset;
+  
+    &:focus {
+      border: 0.5px solid rgb(125, 125, 125);
+    }
+  
+    &.showInput {
+      display: block;
+      opacity: 1;
+    }
+  }
+  .iconButton {
+    width: 24px;
+    height: 24px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    margin-right: 17px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+    .iconImage {
+      width: 100%;
+    }
+  }
+  &.visible {
+    display: flex;
+  }
+
+  &.hidden {
+    display: none;
+  }
+}
+
+@media (min-width:  580px) {
+  .searchHidCont {
+    display: none !important;
+  }
+}
+
+@media(max-width: 580px) {
+  .languageContainer {
+    display: flex;
+  }
+}

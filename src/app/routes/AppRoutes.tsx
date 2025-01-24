@@ -1,13 +1,19 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import Home from '../../pages/Home';
-import '../../shared/styles/global.scss'
+import { store } from '../store/store'
+import '../../shared/styles/global.scss';
+import Profile from '../../pages/Profile';
 
 const AppRoutes = () => (
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<Home />} />
-    </Routes>
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/profile" element={<Profile />} /> {/* Add Profile route */}
+      </Routes>
+    </BrowserRouter>
+  </Provider>
 );
 
 export default AppRoutes;

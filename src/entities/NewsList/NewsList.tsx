@@ -6,19 +6,28 @@ import SortBySelector from '../../features/SortBySelector/SortBySelector.tsx';
 import DatePeriodSelector from '../../features/DatePeriodSelector/DatePeriodSelector.tsx';
 import NewsActions from '../../components/NewsActions.tsx';
 import assets from '../../assets/assets.ts';
+import LanguageSelector from '../../features/LanguageSelector/LanguageSelector.tsx';
 
-export const NewsList: React.FC = () => {
-  const [parameter, setParameter] = useState('technology');
+interface NewsListProps {
+  searchQuery: string;
+}
+
+export const NewsList: React.FC<NewsListProps> = ({ searchQuery }) => {
+  const [parameter, setParameter] = useState('q');
   const [sortBy, setSortBy] = useState('relevancy');
   const [startDate, setStartDate] = useState('2025-01-01');
   const [endDate, setEndDate] = useState('2025-01-25');
+  const [language, setLanguage] = useState('en');
   const [readMoreState, setReadMoreState] = useState<{ [key: string]: boolean }>({});
 
+  const query = searchQuery.trim() || parameter;
+
   const { data, error, isLoading } = useGetLatestNewsQuery({
-    query: parameter,
+    query,
     sortBy,
     from: startDate,
     to: endDate,
+    language,
   });
 
   if (isLoading) return <div>Loading...</div>;
@@ -42,6 +51,10 @@ export const NewsList: React.FC = () => {
     );
   });
 
+  const filteredArticles = validArticles?.filter((article: any) =>
+    article.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString();
@@ -52,6 +65,10 @@ export const NewsList: React.FC = () => {
       ...prevState,
       [url]: !prevState[url],
     }));
+  };
+
+  const handleLanguageChange = (newLanguage: string) => {
+    setLanguage(newLanguage);
   };
 
   return (
@@ -65,16 +82,17 @@ export const NewsList: React.FC = () => {
           onStartDateChange={setStartDate}
           onEndDateChange={setEndDate}
         />
+        <LanguageSelector onLanguageChange={handleLanguageChange} />
       </div>
       <div className={styles.newsList}>
-        {validArticles?.map((article: any) => (
+        {filteredArticles?.map((article: any) => (
           <div key={article.url} className={styles.newsItem}>
             <h3>{article.title}</h3>
             <p>{article.description}</p>
             <div className={styles.newsFoot}>
               <span className={styles.readMoreContainer}>
                 <a
-                  onClick={() => handleReadMore(article.url)} // Only handle state change
+                  onClick={() => handleReadMore(article.url)}
                   href={article.url}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -87,12 +105,10 @@ export const NewsList: React.FC = () => {
                   alt="Read more icon"
                 />
               </span>
-
               <span>
                 <strong className={styles.pubOn}>Published on: </strong>
                 {formatDate(article.publishedAt)}
               </span>
-
               <div>
                 <NewsActions articleId={article.url} />
               </div>

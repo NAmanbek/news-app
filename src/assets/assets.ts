@@ -8,6 +8,7 @@ import share_icon from './share-svgrepo-com.svg';
 import save_icon from './time-svgrepo-com.svg';
 import saved_icon from './time-success-svgrepo-com.svg';
 import header_logo from './newspaper-svgrepo-com.svg';
+import arrow_up_icon from './arrow-up-short-wide-svgrepo-com.svg';
 
 const assets = {
   like_icon,
@@ -19,7 +20,8 @@ const assets = {
   share_icon,
   save_icon,
   saved_icon,
-  header_logo
+  header_logo,
+  arrow_up_icon
 };
 
 export default assets;
