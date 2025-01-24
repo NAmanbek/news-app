@@ -17,6 +17,9 @@
   display: flex;
   justify-content: start;
   flex: none;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 
   .iconLogo {
     width: 48px;
@@ -42,9 +45,9 @@
     align-items: center;
     justify-content: end;
     gap: 10px;
-    width: auto; /* Make the container flexible */
-    min-width: 300px; /* Minimum width for the search container */
-    max-width: 400px; /* Max width for larger screens */
+    width: auto; 
+    min-width: 300px; 
+    max-width: 400px; 
 
     .inputHeader {
       display: flex;
@@ -70,40 +73,9 @@
   .profileContainer {
     display: flex;
     position: relative;
-    
-    .profileDropDown {
-      position: absolute;
-      background-color: #f8f9fa;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px;
-      padding: 7px 0px;
-      border-radius: 4px;
-      z-index: 10;
-      top: 40px;
-      right: -15px;
-      display: none;
-      transition: visibility 0.2s, opacity 0.2s ease-in-out;
-      
-      ul {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        align-items: start;
-        list-style: none;
 
-        li {
-          white-space: nowrap;
-          width: 100%;
-          padding: 0 10px;
-          cursor: pointer;
-          transition: background-color 0.2s ease;
-
-          &:hover {
-            background-color: #d7d7d7;
-          }
-        }
-      }
+    .profileButton {
+      display: flex;
     }
 
     .profileDropDown.show {

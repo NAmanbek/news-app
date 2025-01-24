@@ -10,7 +10,7 @@ const AppRoutes = () => (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/profile" element={<Profile />} /> {/* Add Profile route */}
+        <Route path="/profile" element={<Profile />} /> 
       </Routes>
     </BrowserRouter>
   </Provider>

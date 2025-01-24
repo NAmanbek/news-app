@@ -3,12 +3,12 @@ import styles from './LanguageSelector.module.scss';
 import 'flag-icons/css/flag-icons.min.css';
 
 interface LanguageSelectorProps {
-  onLanguageChange: (language: string) => void; // Callback to notify parent of language change
+  onLanguageChange: (language: string) => void; // 
 }
 
 const LanguageSelector: React.FC<LanguageSelectorProps> = ({ onLanguageChange }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('gb'); // Default to English (UK)
+  const [selectedLanguage, setSelectedLanguage] = useState('gb'); 
 
   const languages = [
     { code: 'gb', name: 'English', apiCode: 'en' },
@@ -23,18 +23,17 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ onLanguageChange })
 
   const handleLanguageSelect = (code: string, apiCode: string) => {
     setSelectedLanguage(code);
-    onLanguageChange(apiCode); // Notify parent component of the new language
-    setIsOpen(false); // Close the dropdown
+    onLanguageChange(apiCode); 
+    setIsOpen(false); 
   };
 
   return (
     <div className={styles.languageContainer}>
-      {/* Selected language */}
+  
       <button className={styles.languageButton} onClick={toggleDropdown}>
         <span className={`fi fi-${selectedLanguage}`}></span>
       </button>
 
-      {/* Dropdown menu */}
       {isOpen && (
         <div className={styles.languageDropdown}>
           {languages.map((lang) => (

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Header.module.scss';
 import assets from '../../src/assets/assets';
 
@@ -10,31 +11,26 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ toggleSearch, searchVisible, onSearch }) => {
 
-  const [dropdownVisible, setDropdownVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-
-  const toogleDropdown = () => {
-    setDropdownVisible((prev) => !prev);
-  };
 
   const handleSearchSubmit = () => {
     if (searchQuery.trim() !== '') {
-      onSearch(searchQuery); // Trigger search
+      onSearch(searchQuery); 
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      handleSearchSubmit(); // Trigger search on Enter
+      handleSearchSubmit(); 
     }
   };
 
   return (
     <header className={styles.header}>
-      <div className={styles.logo}>
+      <Link to='/' className={styles.logo}>
         <img src={assets.header_logo} className={styles.iconLogo} />
         <span className={styles.appName}>Latest News</span>
-      </div>
+      </Link>
       <div className={styles.icons}>
         <div className={styles.searchContainer}>
           <input
@@ -45,39 +41,30 @@ const Header: React.FC<HeaderProps> = ({ toggleSearch, searchVisible, onSearch }
             onKeyPress={handleKeyPress}
             className={styles.inputHeader}
           />
-          <button 
+          <button
             className={styles.iconButton} aria-label="Search"
-            onClick={() => { const windowWidth = window.innerWidth;
+            onClick={() => {
+              const windowWidth = window.innerWidth;
               if (windowWidth < 580) {
-                toggleSearch(); // Below 580px, toggle SearchMin visibility
+                toggleSearch(); 
               } else {
-                handleSearchSubmit(); // Above 580px, trigger a search
+                handleSearchSubmit(); 
               }
             }}
           >
-            <img 
-              src={searchVisible ? assets.arrow_up_icon : assets.search_icon} 
-              className={styles.iconImage} 
+            <img
+              src={searchVisible ? assets.arrow_up_icon : assets.search_icon}
+              className={styles.iconImage}
               alt="Search Icon"
             />
           </button>
         </div>
         <div className={styles.profileContainer}>
-          <button
-            className={styles.iconButton} aria-label="Profile"
-            onClick={toogleDropdown}
-          >
-            <img src={assets.profile_icon} className={styles.iconImage} />
-          </button>
-          <div className={`${styles.profileDropDown} ${
-              dropdownVisible ? styles.show : ''
-            }`}>
-            <ul>
-              <li>Liked Articles</li>
-              <li>Read Later</li>
-              <li>History</li>
-            </ul>
-          </div>
+          <Link to="/profile" className={styles.profileButton}>
+            <button className={styles.iconButton} aria-label="Profile">
+              <img src={assets.profile_icon} className={styles.iconImage} alt="Profile Icon" />
+            </button>
+          </Link>
         </div>
       </div>
     </header>

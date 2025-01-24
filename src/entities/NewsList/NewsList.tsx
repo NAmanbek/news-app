@@ -5,8 +5,11 @@ import ParameterSelector from '../../features/ParameterSelector/ParameterSelecto
 import SortBySelector from '../../features/SortBySelector/SortBySelector.tsx';
 import DatePeriodSelector from '../../features/DatePeriodSelector/DatePeriodSelector.tsx';
 import NewsActions from '../../components/NewsActions.tsx';
-import assets from '../../assets/assets.ts';
 import LanguageSelector from '../../features/LanguageSelector/LanguageSelector.tsx';
+import useReadState from '../../app/store/useReadState.ts';
+
+import unreadIcon from '../../assets/read-unread-svgrepo-com.svg';
+import readIcon from '../../assets/read-svgrepo-com.svg';
 
 interface NewsListProps {
   searchQuery: string;
@@ -18,7 +21,8 @@ export const NewsList: React.FC<NewsListProps> = ({ searchQuery }) => {
   const [startDate, setStartDate] = useState('2025-01-01');
   const [endDate, setEndDate] = useState('2025-01-25');
   const [language, setLanguage] = useState('en');
-  const [readMoreState, setReadMoreState] = useState<{ [key: string]: boolean }>({});
+
+  const { isRead, markAsRead } = useReadState();
 
   const query = searchQuery.trim() || parameter;
 
@@ -38,7 +42,7 @@ export const NewsList: React.FC<NewsListProps> = ({ searchQuery }) => {
       article.title,
       article.description,
       article.url,
-      article.content
+      article.content,
     ];
     const isRemoved = fieldsToCheck.some((field) => field === '[Removed]');
     return (
@@ -60,17 +64,6 @@ export const NewsList: React.FC<NewsListProps> = ({ searchQuery }) => {
     return date.toLocaleDateString();
   };
 
-  const handleReadMore = (url: string) => {
-    setReadMoreState((prevState) => ({
-      ...prevState,
-      [url]: !prevState[url],
-    }));
-  };
-
-  const handleLanguageChange = (newLanguage: string) => {
-    setLanguage(newLanguage);
-  };
-
   return (
     <div className={styles.container}>
       <div className={styles.filters}>
@@ -82,7 +75,7 @@ export const NewsList: React.FC<NewsListProps> = ({ searchQuery }) => {
           onStartDateChange={setStartDate}
           onEndDateChange={setEndDate}
         />
-        <LanguageSelector onLanguageChange={handleLanguageChange} />
+        <LanguageSelector onLanguageChange={(newLanguage) => setLanguage(newLanguage)} />
       </div>
       <div className={styles.newsList}>
         {filteredArticles?.map((article: any) => (
@@ -92,7 +85,7 @@ export const NewsList: React.FC<NewsListProps> = ({ searchQuery }) => {
             <div className={styles.newsFoot}>
               <span className={styles.readMoreContainer}>
                 <a
-                  onClick={() => handleReadMore(article.url)}
+                  onClick={() => markAsRead(article.url)}
                   href={article.url}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -100,9 +93,9 @@ export const NewsList: React.FC<NewsListProps> = ({ searchQuery }) => {
                   Read more
                 </a>
                 <img
-                  src={readMoreState[article.url] ? assets.read_icon : assets.unread_icon}
+                  src={isRead(article.url) ? readIcon : unreadIcon}
                   className={styles.readIcon}
-                  alt="Read more icon"
+                  alt={isRead(article.url) ? 'Read' : 'Unread'}
                 />
               </span>
               <span>
@@ -110,7 +103,13 @@ export const NewsList: React.FC<NewsListProps> = ({ searchQuery }) => {
                 {formatDate(article.publishedAt)}
               </span>
               <div>
-                <NewsActions articleId={article.url} />
+                <NewsActions
+                  article={{
+                    url: article.url,
+                    title: article.title,
+                    description: article.description,
+                  }}
+                />
               </div>
             </div>
           </div>

@@ -12,7 +12,7 @@ const SearchMin: React.FC<SearchMinProps> = ({ className, searchQuery, onSearchC
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      onSearchSubmit(searchQuery); // Trigger search on Enter
+      onSearchSubmit(searchQuery); 
     }
   };
 
