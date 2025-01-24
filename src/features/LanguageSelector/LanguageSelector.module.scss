@@ -5,6 +5,7 @@
   position: relative; 
   cursor: pointer;
   margin-left: 10px;
+  font-weight: normal;
 
   .languageButton {
     background: none;
@@ -49,8 +50,23 @@
   }
 }
 
-@media(max-width: 580px) {
+.hidden {
+  display: none;
+}
+
+@media (max-width: 580px) {
   .languageContainer {
+    display: none; 
+  }
+
+  .showBelow580 {
+    display: flex !important;
+    width: 100%;
+    justify-content: end;
+    margin-right: 15px;
+  }
+
+  .hidden {
     display: none;
   }
 }

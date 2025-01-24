@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './LanguageSelector.module.scss';
 import 'flag-icons/css/flag-icons.min.css';
+import Tooltip from '../../components/Tooltip';
 
 interface LanguageSelectorProps {
-  onLanguageChange: (language: string) => void; // 
+  onLanguageChange: (language: string) => void;
+  className?: string;
 }
 
-const LanguageSelector: React.FC<LanguageSelectorProps> = ({ onLanguageChange }) => {
+const LanguageSelector: React.FC<LanguageSelectorProps> = ({ onLanguageChange, className }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('gb'); 
+  const [selectedLanguage, setSelectedLanguage] = useState('gb');
 
   const languages = [
     { code: 'gb', name: 'English', apiCode: 'en' },
@@ -19,20 +21,33 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ onLanguageChange })
     { code: 'ru', name: 'Russian', apiCode: 'ru' },
   ];
 
+  useEffect(() => {
+    const storedLanguage = localStorage.getItem('selectedLanguage');
+    if (storedLanguage) {
+      setSelectedLanguage(storedLanguage);
+      const apiCode = languages.find((lang) => lang.code === storedLanguage)?.apiCode || 'en';
+      onLanguageChange(apiCode);
+    }
+  }, [onLanguageChange, languages]);
+
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
   const handleLanguageSelect = (code: string, apiCode: string) => {
     setSelectedLanguage(code);
-    onLanguageChange(apiCode); 
-    setIsOpen(false); 
+    onLanguageChange(apiCode);
+    setIsOpen(false);
+
+    localStorage.setItem('selectedLanguage', code);
   };
 
   return (
-    <div className={styles.languageContainer}>
-  
-      <button className={styles.languageButton} onClick={toggleDropdown}>
-        <span className={`fi fi-${selectedLanguage}`}></span>
-      </button>
+    <div className={`${styles.languageContainer} ${className}`}>
+
+      <Tooltip text={'language'}>
+        <button className={styles.languageButton} onClick={toggleDropdown}>
+          <span className={`fi fi-${selectedLanguage}`}></span>
+        </button>
+      </Tooltip>
 
       {isOpen && (
         <div className={styles.languageDropdown}>

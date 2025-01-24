@@ -10,6 +10,7 @@ import saved_icon from './time-success-svgrepo-com.svg';
 import header_logo from './newspaper-svgrepo-com.svg';
 import arrow_up_icon from './arrow-up-short-wide-svgrepo-com.svg';
 import remove_icon from './trash-svgrepo-com.svg';
+import bg_img from './top-view-newspaper-pieces-arrangement.jpg';
 
 const assets = {
   like_icon,
@@ -23,7 +24,8 @@ const assets = {
   saved_icon,
   header_logo,
   arrow_up_icon,
-  remove_icon
+  remove_icon,
+  bg_img
 };
 
 export default assets;

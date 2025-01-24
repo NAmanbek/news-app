@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.scss';
 import assets from '../../src/assets/assets';
+import Tooltip from './Tooltip';
+import { useNewsFilters } from '../entities/NewsList/useNewsFilters.ts';
+import LanguageSelector from '../features/LanguageSelector/LanguageSelector';
+import stylesLC from '../features/LanguageSelector/LanguageSelector.module.scss'
 
 interface HeaderProps {
   toggleSearch: () => void;
@@ -10,27 +14,32 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ toggleSearch, searchVisible, onSearch }) => {
-
-  const [searchQuery, setSearchQuery] = useState('');
+  const { setLanguage } = useNewsFilters();
+  const [searchQuery, setSearchQuery] = React.useState('');
 
   const handleSearchSubmit = () => {
     if (searchQuery.trim() !== '') {
-      onSearch(searchQuery); 
+      onSearch(searchQuery);
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      handleSearchSubmit(); 
+      handleSearchSubmit();
     }
   };
 
   return (
     <header className={styles.header}>
-      <Link to='/' className={styles.logo}>
+      <Link to="/" className={styles.logo}>
         <img src={assets.header_logo} className={styles.iconLogo} />
         <span className={styles.appName}>Latest News</span>
       </Link>
+      <LanguageSelector
+        onLanguageChange={(newLanguage) => setLanguage(newLanguage)}
+        className={`${stylesLC.hidden} ${stylesLC.showBelow580}`}
+      />
+
       <div className={styles.icons}>
         <div className={styles.searchContainer}>
           <input
@@ -42,13 +51,14 @@ const Header: React.FC<HeaderProps> = ({ toggleSearch, searchVisible, onSearch }
             className={styles.inputHeader}
           />
           <button
-            className={styles.iconButton} aria-label="Search"
+            className={styles.iconButton}
+            aria-label="Search"
             onClick={() => {
               const windowWidth = window.innerWidth;
               if (windowWidth < 580) {
-                toggleSearch(); 
+                toggleSearch();
               } else {
-                handleSearchSubmit(); 
+                handleSearchSubmit();
               }
             }}
           >
@@ -61,9 +71,11 @@ const Header: React.FC<HeaderProps> = ({ toggleSearch, searchVisible, onSearch }
         </div>
         <div className={styles.profileContainer}>
           <Link to="/profile" className={styles.profileButton}>
-            <button className={styles.iconButton} aria-label="Profile">
-              <img src={assets.profile_icon} className={styles.iconImage} alt="Profile Icon" />
-            </button>
+            <Tooltip text={'profile'}>
+              <button className={styles.iconButton} aria-label="Profile">
+                <img src={assets.profile_icon} className={styles.iconImage} alt="Profile Icon" />
+              </button>
+            </Tooltip>
           </Link>
         </div>
       </div>

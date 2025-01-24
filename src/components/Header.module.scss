@@ -127,3 +127,13 @@
     margin-top: 0;
   }
 }
+
+.languageContainer {
+  display: none;
+}
+
+.showBelow580 {
+  @media (max-width: 580px) {
+    display: flex !important;
+  }
+}

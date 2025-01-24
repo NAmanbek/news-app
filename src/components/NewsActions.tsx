@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './NewsActions.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, toggleLikeArticle, toggleReadLaterArticle } from '../app/store/store';
+import Tooltip from './Tooltip';
 
 type NewsActionProps = {
   article: {
@@ -58,7 +59,7 @@ const NewsActions: React.FC<NewsActionProps> = ({ article }) => {
         navigator.clipboard.writeText(shareUrl).then(() => alert('Link copied to clipboard!'));
         break;
     }
-    setIsDropdownOpen(false); 
+    setIsDropdownOpen(false);
   };
 
   useEffect(() => {
@@ -77,7 +78,7 @@ const NewsActions: React.FC<NewsActionProps> = ({ article }) => {
 
   return (
     <div className={styles.container}>
-      
+
       <button
         onClick={handleLike}
         className={`${styles.iconButton} ${isLiked ? styles.liked : ''}`}
@@ -87,62 +88,81 @@ const NewsActions: React.FC<NewsActionProps> = ({ article }) => {
       </button>
 
       <div className={styles.shareContainer} ref={dropdownRef}>
-        <button
-          className={styles.iconButton}
-          aria-label="Share"
-          onClick={toggleDropdown}
-        >
-          <i className="fas fa-share-alt"></i>
-        </button>
+        <Tooltip text={'share'}>
+          <button
+            className={styles.iconButton}
+            aria-label="Share"
+            onClick={toggleDropdown}
+          >
+            <i className="fas fa-share-alt"></i>
+          </button>
+        </Tooltip>
+
         {isDropdownOpen && (
           <div className={styles.shareDropdown}>
-            <button
-              onClick={() => handleShareOption('whatsapp')}
-              className={styles.shareOption}
-            >
-              <i className="fab fa-whatsapp"></i> 
-            </button>
-            <button
-              onClick={() => handleShareOption('telegram')}
-              className={styles.shareOption}
-            >
-              <i className="fab fa-telegram-plane"></i> 
-            </button>
-            <button
-              onClick={() => handleShareOption('facebook')}
-              className={styles.shareOption}
-            >
-              <i className="fab fa-facebook"></i> 
-            </button>
-            <button
-              onClick={() => handleShareOption('twitter')}
-              className={styles.shareOption}
-            >
-              <i className="fab fa-twitter"></i> 
-            </button>
-            <button
-              onClick={() => handleShareOption('linkedin')}
-              className={styles.shareOption}
-            >
-              <i className="fab fa-linkedin"></i> 
-            </button>
-            <button
-              onClick={() => handleShareOption('copy')}
-              className={styles.shareOption}
-            >
-              <i className="fas fa-copy"></i> 
-            </button>
+            <Tooltip text={'whatsapp'}>
+              <button
+                onClick={() => handleShareOption('whatsapp')}
+                className={styles.shareOption}
+              >
+                <i className="fab fa-whatsapp"></i>
+              </button>
+            </Tooltip>
+            <Tooltip text={'telegram'}>
+              <button
+                onClick={() => handleShareOption('telegram')}
+                className={styles.shareOption}
+              >
+                <i className="fab fa-telegram-plane"></i>
+              </button>
+            </Tooltip>
+            <Tooltip text={'facebook'}>
+              <button
+                onClick={() => handleShareOption('facebook')}
+                className={styles.shareOption}
+              >
+                <i className="fab fa-facebook"></i>
+              </button>
+            </Tooltip>
+            <Tooltip text={'twitter'}>
+              <button
+                onClick={() => handleShareOption('twitter')}
+                className={styles.shareOption}
+              >
+                <i className="fab fa-twitter"></i>
+              </button>
+            </Tooltip>
+            <Tooltip text={'linkedin'}>
+              <button
+                onClick={() => handleShareOption('linkedin')}
+                className={styles.shareOption}
+              >
+                <i className="fab fa-linkedin"></i>
+              </button>
+            </Tooltip>
+            <Tooltip text={'copy link'}>
+              <button
+                onClick={() => handleShareOption('copy')}
+                className={styles.shareOption}
+              >
+                <i className="fas fa-copy"></i>
+              </button>
+            </Tooltip>
           </div>
         )}
       </div>
 
-      <button
-        onClick={handleReadLater}
-        className={`${styles.iconButton} ${isReadLater ? styles.saved : ''}`}
-        aria-label="Save"
-      >
-        <i className={isReadLater ? 'fas fa-bookmark' : 'far fa-bookmark'}></i>
-      </button>
+      <Tooltip text={isReadLater ? "saved" : "save"}>
+        <button
+          onClick={handleReadLater}
+          className={`${styles.iconButton} ${isReadLater ? styles.saved : ''}`}
+          aria-label="Save"
+        >
+          <i className={isReadLater ? 'fas fa-bookmark' : 'far fa-bookmark'}></i>
+        </button>
+      </Tooltip>
+
+
     </div>
   );
 };
