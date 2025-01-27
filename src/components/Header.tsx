@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import styles from './Header.module.scss';
 import assets from '../../src/assets/assets';
 import Tooltip from './Tooltip';
-import { useNewsFilters } from '../entities/NewsList/useNewsFilters.ts';
 import LanguageSelector from '../features/LanguageSelector/LanguageSelector';
 import stylesLC from '../features/LanguageSelector/LanguageSelector.module.scss'
 
@@ -11,10 +10,10 @@ interface HeaderProps {
   toggleSearch: () => void;
   searchVisible: boolean;
   onSearch: (query: string) => void;
+  onLanguageChange: (language: string) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ toggleSearch, searchVisible, onSearch }) => {
-  const { setLanguage } = useNewsFilters();
+const Header: React.FC<HeaderProps> = ({ toggleSearch, searchVisible, onSearch,onLanguageChange }) => {
   const [searchQuery, setSearchQuery] = React.useState('');
 
   const handleSearchSubmit = () => {
@@ -36,7 +35,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSearch, searchVisible, onSearch }
         <span className={styles.appName}>Latest News</span>
       </Link>
       <LanguageSelector
-        onLanguageChange={(newLanguage) => setLanguage(newLanguage)}
+        onLanguageChange={onLanguageChange}
         className={`${stylesLC.hidden} ${stylesLC.showBelow580}`}
       />
 

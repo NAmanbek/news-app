@@ -4,6 +4,7 @@ import Header from '../components/Header.tsx';
 import styles from './Home.module.scss'
 import SearchMin from '../components/SearchMin.tsx';
 import stylesSM from '../components/SearchMin.module.scss'
+import { useNewsFilters } from '../entities/NewsList/useNewsFilters.ts';
 
 const Home: React.FC = () => {
 
@@ -11,6 +12,9 @@ const Home: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchInput, setSearchInput] = useState('');
   
+  const {
+    setLanguage,
+  } = useNewsFilters();
 
   const toggleSearch = () => {
     setSearchVisible((prev) => !prev);
@@ -35,6 +39,7 @@ const Home: React.FC = () => {
         toggleSearch={toggleSearch} 
         searchVisible={searchVisible}
         onSearch={setSearchQuery} 
+        onLanguageChange={setLanguage}
       />
       <SearchMin
         className={`${styles.searchHidCont} ${searchVisible ? stylesSM.visible : stylesSM.hidden}`}

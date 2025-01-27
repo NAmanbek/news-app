@@ -11,6 +11,18 @@
     gap: 20px;
   }
 
+  .noMatch{
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    font-weight: 700;
+    font-size: 18px;
+    width: 100%;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  }
+
   .newsItem {
     display: flex;
     width: 100%;

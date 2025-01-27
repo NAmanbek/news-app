@@ -4,12 +4,17 @@ import { RootState, clearLikedArticles, clearReadLaterArticles, toggleLikeArticl
 import styles from './Profile.module.scss';
 import Header from '../components/Header';
 import assets from '../assets/assets';
+import { useNewsFilters } from '../entities/NewsList/useNewsFilters';
 
 const Profile: React.FC = () => {
   const dispatch = useDispatch();
   const [activeSection, setActiveSection] = useState<'liked' | 'readLater'>('liked');
   const [searchQuery, setSearchQuery] = useState('');
   const [searchVisible, setSearchVisible] = useState(false);
+
+  const {
+    setLanguage,
+  } = useNewsFilters();
 
   const likedArticles = useSelector((state: RootState) => state.articles.likedArticles);
   const readLaterArticles = useSelector((state: RootState) => state.articles.readLaterArticles);
@@ -36,7 +41,7 @@ const Profile: React.FC = () => {
     );
 
     if (filteredArticles.length === 0) {
-      return <p>No articles match your search.</p>;
+      return <p className={styles.noMatch}>No articles</p>;
     }
 
     return (
@@ -70,6 +75,7 @@ const Profile: React.FC = () => {
         toggleSearch={toggleSearch}
         searchVisible={searchVisible}
         onSearch={setSearchQuery}
+        onLanguageChange={setLanguage}
       />
 
       {/* Section toggle buttons */}
